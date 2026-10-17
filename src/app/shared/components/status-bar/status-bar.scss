@@ -1,0 +1,12 @@
+:host { display: block; }
+.status-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.15rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+.status-copy { display: flex; align-items: center; gap: .75rem; min-width: 0; }
+.status-copy div { display: grid; gap: .15rem; min-width: 0; }
+.label { color: var(--text-muted); font-size: .65rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .9rem; }
+.pulse { flex: 0 0 auto; width: .65rem; height: .65rem; border-radius: 50%; background: var(--text-muted); box-shadow: 0 0 0 .3rem rgb(156 163 175 / 10%); }
+.pulse.active { background: var(--success); box-shadow: 0 0 0 .3rem rgb(52 211 153 / 12%); }
+.badges { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .4rem; }
+.badges span { padding: .35rem .55rem; border: 1px solid var(--border); border-radius: 999px; color: var(--text-muted); font-size: .72rem; white-space: nowrap; }
+.badges .success { color: var(--success); border-color: color-mix(in srgb, var(--success) 35%, var(--border)); }
+@media (max-width: 700px) { .status-bar { align-items: flex-start; flex-direction: column; } .badges { justify-content: flex-start; } }

@@ -1,0 +1,208 @@
+:host {
+  display: block;
+}
+
+.source-card {
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.section-heading,
+.input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-heading h2 {
+  margin: 0.25rem 0 0;
+  font-size: 1.15rem;
+}
+
+.eyebrow {
+  color: var(--accent-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.privacy-note {
+  color: var(--success);
+  font-size: 0.78rem;
+}
+
+.source-tabs {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  margin: 1.25rem 0 1rem;
+  padding: 0.25rem;
+  background: var(--surface-raised);
+  border-radius: 0.8rem;
+}
+
+.source-tabs button {
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.7rem 1rem;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.source-tabs button.active {
+  color: white;
+  background: var(--accent);
+}
+
+.drop-zone {
+  min-height: 8.5rem;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.drop-zone:hover,
+.drop-zone.dragging {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  transform: translateY(-1px);
+}
+
+.drop-zone input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+}
+
+.drop-zone strong {
+  color: var(--text);
+}
+
+.drop-zone small {
+  margin-top: 0.25rem;
+}
+
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  font-size: 1.35rem;
+}
+
+.youtube-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.youtube-form input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  padding-inline-end: 3.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  color: var(--text);
+  background: var(--player-bg);
+  font: inherit;
+}
+
+.youtube-input {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.youtube-form button {
+  padding: 0.85rem 1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  color: white;
+  background: var(--accent);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.youtube-form .paste-button {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 0.6rem;
+  color: var(--text-muted);
+  background: transparent;
+  transform: translateY(-50%);
+}
+
+.youtube-form .paste-button:hover {
+  color: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.youtube-form .paste-button:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: -2px;
+}
+
+.paste-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.youtube-note,
+.validation {
+  margin: 0.75rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.validation {
+  color: var(--danger);
+}
+
+@media (max-width: 640px) {
+  .section-heading,
+  .input-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .privacy-note {
+    align-self: flex-start;
+  }
+
+  .source-tabs {
+    width: 100%;
+  }
+}

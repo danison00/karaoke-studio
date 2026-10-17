@@ -1,0 +1,30 @@
+<section class="pitch-card" aria-labelledby="pitch-title" [class.disabled]="disabled()">
+  <div class="heading">
+    <div>
+      <span class="eyebrow">Controle de tonalidade</span>
+      <h2 id="pitch-title">Ajuste o tom sem alterar a velocidade</h2>
+    </div>
+    <span class="speed-pill">1,00×</span>
+  </div>
+
+  <div class="stepper">
+    <button type="button" data-testid="pitch-down" [disabled]="disabled() || value() <= -12" aria-label="Diminuir meio tom" (click)="decrease()">−</button>
+    <output aria-live="polite">
+      <strong>{{ label() }}</strong>
+      <span>{{ value() === 0 ? 'Afinação natural da música' : 'Transposição em tempo real' }}</span>
+    </output>
+    <button type="button" data-testid="pitch-up" [disabled]="disabled() || value() >= 12" aria-label="Aumentar meio tom" (click)="increase()">+</button>
+  </div>
+
+  <div class="slider-row">
+    <span>−12</span>
+    <input type="range" min="-12" max="12" step="0.5" [value]="value()" [disabled]="disabled()" aria-label="Tom em semitons" (input)="setFromInput($event)" />
+    <span>+12</span>
+  </div>
+
+  <button type="button" class="reset" [disabled]="disabled() || value() === 0" (click)="reset()">Restaurar tom original</button>
+
+  @if (disabled()) {
+    <p class="notice" role="note">Carregue uma mídia para ativar o ajuste de tom.</p>
+  }
+</section>

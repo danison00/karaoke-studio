@@ -1,0 +1,91 @@
+<section class="source-card" aria-labelledby="source-title">
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">Fonte</span>
+      <h2 id="source-title">Escolha sua música</h2>
+    </div>
+    <span class="privacy-note">Processamento no seu servidor</span>
+  </div>
+
+  <div class="source-tabs" role="tablist" aria-label="Fonte da música">
+    <button
+      type="button"
+      role="tab"
+      data-testid="local-tab"
+      [class.active]="sourceType() === 'local'"
+      [attr.aria-selected]="sourceType() === 'local'"
+      (click)="requestSource('local')"
+    >
+      <span aria-hidden="true">▣</span>
+      Arquivo local
+    </button>
+    <button
+      type="button"
+      role="tab"
+      data-testid="youtube-tab"
+      [class.active]="sourceType() === 'youtube'"
+      [attr.aria-selected]="sourceType() === 'youtube'"
+      (click)="requestSource('youtube')"
+    >
+      <span aria-hidden="true">▶</span>
+      YouTube
+    </button>
+  </div>
+
+  @if (sourceType() === 'local') {
+    <label
+      class="drop-zone"
+      [class.dragging]="isDragging()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+    >
+      <input
+        type="file"
+        accept="audio/mpeg,audio/wav,audio/x-wav,video/mp4,video/webm,.mp3,.wav,.mp4,.webm"
+        (change)="onFileInput($event)"
+      />
+      <span class="upload-icon" aria-hidden="true">↑</span>
+      <strong>Arraste uma música para cá</strong>
+      <span>ou clique para selecionar do computador</span>
+      <small>MP3, WAV, MP4 ou WebM • nada será enviado</small>
+    </label>
+  } @else {
+    <form class="youtube-form" (submit)="$event.preventDefault(); submitYoutubeUrl()">
+      <label for="youtube-url">URL do vídeo</label>
+      <div class="input-row">
+        <div class="youtube-input">
+          <input
+            id="youtube-url"
+            type="url"
+            placeholder="https://www.youtube.com/watch?v=..."
+            [value]="youtubeUrl()"
+            (input)="updateYoutubeUrl($event)"
+          />
+          <button
+            type="button"
+            class="paste-button"
+            data-testid="paste-youtube-url"
+            aria-label="Colar link da área de transferência"
+            title="Colar link"
+            (click)="pasteYoutubeUrl()"
+          >
+            <svg class="paste-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 4.5h6" />
+              <path d="M9 3h6a1.5 1.5 0 0 1 1.5 1.5V6h1.25A2.25 2.25 0 0 1 20 8.25v10.5A2.25 2.25 0 0 1 17.75 21h-11a2.25 2.25 0 0 1-2.25-2.25V8.25A2.25 2.25 0 0 1 6.75 6H8V4.5A1.5 1.5 0 0 1 9 3Z" />
+              <path d="M8 10h8M8 14h5" />
+            </svg>
+          </button>
+        </div>
+        <button type="submit">Carregar vídeo</button>
+      </div>
+      <p class="youtube-note">
+        O vídeo público será processado pelo servidor da aplicação e reproduzido com ajuste de tom.
+      </p>
+    </form>
+  }
+
+  @if (validationMessage()) {
+    <p class="validation" role="alert">{{ validationMessage() }}</p>
+  }
+</section>

@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: karaoke-studio
+  mvc:
+    problemdetails:
+      enabled: true
+
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+
+logging:
+  file:
+    name: ${KARAOKE_LOG_FILE:karaoke-studio.log}
+  level:
+    com.karaokestudio.youtube: DEBUG
+    com.karaokestudio.web: INFO
+
+app:
+  youtube:
+    max-url-length: 2048
+    resolution-timeout: 20s
+    upstream-connect-timeout: 10s
+    upstream-read-timeout: 30s
+    max-global-streams: 8
+    max-streams-per-ip: 2
+    max-resolutions-per-minute: 10
+    max-height: 360
+    max-duration: 2h
+    max-input-size: 2GB
+    preparation-timeout: 15m
+    ready-ttl: 2h
+    failed-ttl: 10m
+    cache-size: 5GB
+    cache-dir: ${YOUTUBE_CACHE_DIR:${java.io.tmpdir}/karaoke-studio-youtube}
+    active-workers: 2
+    max-queue: 8
+    cleanup-interval: 5m
+    ffmpeg-path: ${FFMPEG_PATH:ffmpeg}

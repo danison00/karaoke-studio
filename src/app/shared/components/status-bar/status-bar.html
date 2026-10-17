@@ -1,0 +1,12 @@
+<section class="status-bar" aria-live="polite">
+  <div class="status-copy">
+    <span class="pulse" [class.active]="dspReady()" aria-hidden="true"></span>
+    <div><span class="label">Status</span><strong>{{ message() }}</strong></div>
+  </div>
+  <div class="badges">
+    @if (sourceType() === 'youtube') { <span>YouTube</span> }
+    @else if (sourceType() === 'local') { <span>Arquivo local</span> }
+    @if (dspReady()) { <span class="success">DSP ativo</span> }
+    <span>Velocidade 1,00×</span>
+  </div>
+</section>

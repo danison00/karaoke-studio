@@ -1,0 +1,7 @@
+:host { display: block; }
+.volume-control { display: grid; grid-template-columns: auto auto minmax(7rem, 1fr) 3rem; align-items: center; gap: .75rem; }
+button { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; border: 1px solid var(--border); border-radius: 50%; color: var(--text); background: var(--surface-raised); cursor: pointer; }
+label { color: var(--text-muted); font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+input { width: 100%; accent-color: var(--accent); }
+output { color: var(--text); font-variant-numeric: tabular-nums; text-align: right; }
+@media (max-width: 520px) { label { display: none; } .volume-control { grid-template-columns: auto 1fr 3rem; } }

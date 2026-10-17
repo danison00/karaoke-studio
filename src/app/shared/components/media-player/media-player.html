@@ -1,0 +1,76 @@
+<section class="player-card" aria-label="Reprodutor de mídia">
+  <div #stage class="media-stage">
+    <video
+      #media
+      playsinline
+      [class.visible]="localSource()?.kind === 'video' || youtubeSource()?.mode === 'PROGRESSIVE' || youtubeSource()?.mode === 'MUXED' || youtubeSource()?.mode === 'HLS'"
+      [attr.aria-label]="youtubeSource() ? 'Vídeo do YouTube' : 'Vídeo de karaokê local'"
+    ></video>
+
+    @if (!store.source()) {
+      <div class="media-placeholder empty">
+        <span class="brand-mark" aria-hidden="true">♫</span>
+        <strong>Sua música aparece aqui</strong>
+        <span>Selecione um arquivo local ou vídeo do YouTube</span>
+      </div>
+    } @else if (localSource()?.kind === 'audio') {
+      <div class="media-placeholder audio-cover">
+        <span class="album-art" aria-hidden="true">♪</span>
+        <strong>{{ store.player().mediaName }}</strong>
+        <span>Áudio local com ajuste de tom</span>
+      </div>
+    }
+
+    @if (store.player().isLoading || store.player().isBuffering) {
+      <div class="loading-overlay" role="status">
+        <span class="spinner" aria-hidden="true"></span>
+        {{ store.player().status === 'preparing' || store.player().status === 'resolving' ? 'Resolvendo vídeo…' : store.player().status === 'seeking' ? 'Buscando trecho…' : store.player().isBuffering ? 'Buffering…' : 'Carregando…' }}
+      </div>
+    }
+  </div>
+
+  <div class="player-controls">
+    <button
+      type="button"
+      class="icon-button primary"
+      data-testid="play-toggle"
+      [disabled]="!store.source() || store.player().status === 'error'"
+      [attr.aria-label]="store.player().isPlaying ? 'Pausar' : 'Reproduzir'"
+      (click)="togglePlayback()"
+    >
+      {{ store.player().isPlaying ? '❚❚' : '▶' }}
+    </button>
+    <button
+      type="button"
+      class="icon-button"
+      [disabled]="!store.source()"
+      aria-label="Reiniciar música"
+      (click)="restart()"
+    >
+      ↺
+    </button>
+
+    <span class="time current">{{ formatTime(store.player().currentTime) }}</span>
+    <input
+      type="range"
+      data-testid="progress"
+      min="0"
+      [max]="store.player().duration || 0"
+      step="0.1"
+      [value]="store.player().currentTime"
+      [disabled]="!store.source() || !store.player().duration"
+      aria-label="Posição da música"
+      (input)="seek($event)"
+    />
+    <span class="time">{{ formatTime(store.player().duration) }}</span>
+
+    <button
+      type="button"
+      class="icon-button fullscreen"
+      aria-label="Alternar tela cheia"
+      (click)="toggleFullscreen()"
+    >
+      ⛶
+    </button>
+  </div>
+</section>

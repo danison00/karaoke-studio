@@ -1,0 +1,24 @@
+:host { display: block; min-height: 100dvh; }
+.app-shell { min-height: 100dvh; background: radial-gradient(circle at 50% -20%, rgb(167 139 250 / 12%), transparent 38%); }
+.app-header { position: sticky; z-index: 10; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.5rem; padding: .75rem max(1rem, calc((100vw - 1200px) / 2)); border-bottom: 1px solid rgb(55 65 81 / 75%); background: rgb(16 20 30 / 86%); backdrop-filter: blur(18px); }
+.brand { display: flex; align-items: center; gap: .75rem; color: var(--text); text-decoration: none; }
+.brand > span:last-child { display: grid; }
+.brand strong { font-size: 1rem; letter-spacing: .01em; }
+.brand small { margin-top: .08rem; color: var(--text-muted); font-size: .72rem; }
+.logo { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: .85rem; color: white; background: linear-gradient(145deg, var(--accent), #7c3aed); box-shadow: 0 .6rem 1.7rem rgb(124 58 237 / 24%); font-size: 1.3rem; }
+.header-note { display: flex; align-items: center; gap: .45rem; color: var(--text-muted); font-size: .78rem; }
+.header-note span { color: var(--success); font-size: .65rem; }
+main { display: grid; gap: 1rem; width: min(100% - 2rem, 1200px); margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) 0 2rem; }
+.hero { max-width: 44rem; margin-bottom: .4rem; }
+.kicker { color: var(--accent-soft); font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.hero h1 { margin: .35rem 0 .5rem; font-size: clamp(2rem, 5vw, 3.75rem); line-height: .98; letter-spacing: -.045em; }
+.hero p { margin: 0; color: var(--text-muted); font-size: clamp(.95rem, 2vw, 1.08rem); }
+.studio-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(21rem, .85fr); align-items: start; gap: 1rem; }
+.player-column { display: grid; gap: 1rem; min-width: 0; }
+.transport-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1.5rem; padding: 1rem 1.15rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+.tempo { display: grid; gap: .15rem; padding-left: 1.25rem; border-left: 1px solid var(--border); text-align: right; }
+.tempo span { color: var(--text-muted); font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.tempo strong { font-variant-numeric: tabular-nums; }
+footer { padding: 1rem; color: var(--text-muted); text-align: center; font-size: .75rem; }
+@media (max-width: 900px) { .studio-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .header-note { display: none; } .app-header { min-height: 4rem; } main { width: min(100% - 1rem, 1200px); } .transport-card { grid-template-columns: 1fr; gap: 1rem; } .tempo { grid-template-columns: 1fr auto; padding: 1rem 0 0; border-top: 1px solid var(--border); border-left: 0; text-align: left; } }

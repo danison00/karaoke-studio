@@ -1,0 +1,35 @@
+<div class="app-shell">
+  <header class="app-header">
+    <a class="brand" href="#main" aria-label="Karaokê Studio — ir para o conteúdo">
+      <span class="logo" aria-hidden="true">♫</span>
+      <span><strong>Karaokê Studio</strong><small>Sua música, seu tom.</small></span>
+    </a>
+    <div class="header-note"><span aria-hidden="true">●</span> Mídia local e YouTube same-origin</div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <span class="kicker">Estúdio de voz</span>
+      <h1 id="page-title">Karaokê Studio</h1>
+      <p>Carregue sua música, encontre o tom ideal e cante sem mudar o andamento.</p>
+    </section>
+
+    <app-media-source-selector [sourceType]="selectedSource()" (sourceTypeChange)="changeSource($event)" (localFileSelected)="loadLocalFile($event)" (youtubeUrlSubmitted)="submitYoutubeUrl($event)" />
+
+    <div class="studio-grid">
+      <div class="player-column">
+        <app-media-player />
+        <section class="transport-card">
+          <app-volume-control [volume]="store.settings().volume" [muted]="store.settings().muted" (volumeChange)="changeVolume($event)" (mutedChange)="changeMuted($event)" />
+          <div class="tempo"><span>Velocidade</span><strong>1,00×</strong></div>
+        </section>
+      </div>
+
+      <app-pitch-control [value]="store.settings().pitchSemitones" [disabled]="pitchDisabled()" (pitchChange)="changePitch($event)" />
+    </div>
+
+    <app-status-bar [message]="store.statusMessage()" [sourceType]="store.player().sourceType" [dspReady]="pitchShifter.ready() && store.player().canProcessPitch" />
+  </main>
+
+  <footer>Arquivos locais permanecem neste dispositivo. Vídeos do YouTube são processados pelo servidor da aplicação.</footer>
+</div>
