@@ -12,6 +12,10 @@ import com.github.felipeucelli.javatube.Youtube;
 
 public class JavaTubeResolver {
 
+    private static final String JAVA_TUBE_CLIENT = "WEB";
+    private static final boolean JAVA_TUBE_USE_PO_TOKEN = true;
+    private static final boolean JAVA_TUBE_ALLOW_CACHE = false;
+
     private final ClientFactory clientFactory;
     private final AdaptiveStreamSelector adaptiveSelector;
     private final int maxHeight;
@@ -63,6 +67,10 @@ public class JavaTubeResolver {
         } catch (Exception exception) {
             throw new YoutubeResolutionException("Não foi possível resolver o vídeo do YouTube", exception);
         }
+    }
+
+    static Youtube createYoutube(String url) throws Exception {
+        return new Youtube(url, JAVA_TUBE_CLIENT, JAVA_TUBE_USE_PO_TOKEN, JAVA_TUBE_ALLOW_CACHE);
     }
 
     private ResolvedYoutubeMedia map(
@@ -159,7 +167,7 @@ public class JavaTubeResolver {
         private final Youtube youtube;
 
         private JavaTubeClientAdapter(String url) throws Exception {
-            this.youtube = new Youtube(url);
+            this.youtube = createYoutube(url);
         }
 
         @Override

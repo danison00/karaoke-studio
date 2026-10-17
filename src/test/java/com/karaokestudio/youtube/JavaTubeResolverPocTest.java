@@ -4,14 +4,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.List;
 
+import com.github.felipeucelli.javatube.Youtube;
 import org.junit.jupiter.api.Test;
 
 class JavaTubeResolverPocTest {
 
     private static final URI VIDEO_URL = URI.create("https://www.youtube.com/watch?v=abcdefghijk");
+
+    @Test
+    void createsYoutubeWithWebClientAndPoTokenEnabled() throws Exception {
+        var youtube = JavaTubeResolver.createYoutube(VIDEO_URL.toString());
+
+        assertThat(fieldValue(youtube, "client")).isEqualTo("WEB");
+        assertThat(fieldValue(youtube, "usePoToken")).isEqualTo(true);
+    }
 
     @Test
     void prefersUsableProgressiveMp4() {
@@ -79,6 +89,12 @@ class JavaTubeResolverPocTest {
 
     private static JavaTubeResolver resolver(FakeClient client) {
         return new JavaTubeResolver(url -> client);
+    }
+
+    private static Object fieldValue(Youtube youtube, String fieldName) throws Exception {
+        Field field = Youtube.class.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(youtube);
     }
 
     private static YoutubeStream stream(
