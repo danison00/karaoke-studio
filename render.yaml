@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: karaoke-studio
+    runtime: docker
+    repo: https://github.com/danison00/karaoke-studio
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    autoDeployTrigger: commit
+    healthCheckPath: /
+    envVars:
+      - key: JAVA_OPTS
+        value: -XX:MaxRAMPercentage=75.0
+      - key: FFMPEG_PATH
+        value: ffmpeg
+      - key: YOUTUBE_CACHE_DIR
+        value: /tmp/karaoke-studio-youtube
+      - key: KARAOKE_LOG_FILE
+        value: /tmp/karaoke-studio.log

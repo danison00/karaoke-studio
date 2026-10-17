@@ -71,11 +71,13 @@ Abra `http://localhost:8080`. Para interromper, pressione `Ctrl+C`.
 
 ### Publicar no Render
 
-1. Faça push deste repositório para o GitHub ou GitLab.
-2. No Render, escolha **New > Web Service** e conecte o repositório.
-3. Selecione **Docker** como runtime. O Render detectará o `Dockerfile` na raiz.
-4. Configure o health check como `/` e mantenha a porta gerenciada pelo Render.
-5. Crie o serviço e aguarde o build da imagem.
+Há um `render.yaml` na raiz para configurar o serviço como Blueprint. No Render:
+
+1. Abra **New > Blueprint** e conecte `danison00/karaoke-studio`.
+2. Selecione a branch `main` e confirme o serviço `karaoke-studio`.
+3. Revise o plano e clique em **Apply**. O Render usará o `Dockerfile` da raiz, o health check `/` e o deploy automático a cada push na `main`.
+
+Também é possível criar manualmente em **New > Web Service**: conecte o repositório, escolha **Docker** como runtime, mantenha `Dockerfile Path` como `./Dockerfile`, configure o health check como `/` e crie o serviço.
 
 O Spring Boot já usa a variável `PORT` fornecida pelo Render. Não defina uma porta fixa no painel. A URL final será HTTPS, o que também atende às exigências dos navegadores móveis para clipboard e reprodução de mídia.
 
