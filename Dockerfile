@@ -2,6 +2,10 @@
 
 FROM maven:3.9-eclipse-temurin-26 AS build
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libatomic1 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /workspace
 
 # Copy the build descriptors first so Docker can reuse dependency layers.
