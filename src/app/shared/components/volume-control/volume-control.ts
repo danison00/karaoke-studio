@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-volume-control',
@@ -13,9 +13,16 @@ export class VolumeControl {
   readonly muted = input(false);
   readonly volumeChange = output<number>();
   readonly mutedChange = output<boolean>();
+  readonly displayedVolume = signal(0.8);
+
+  constructor() {
+    effect(() => this.displayedVolume.set(this.volume()));
+  }
 
   updateVolume(event: Event): void {
-    this.volumeChange.emit(Number((event.target as HTMLInputElement).value) / 100);
+    const volume = Number((event.target as HTMLInputElement).value) / 100;
+    this.displayedVolume.set(volume);
+    this.volumeChange.emit(volume);
   }
 
   toggleMute(): void {

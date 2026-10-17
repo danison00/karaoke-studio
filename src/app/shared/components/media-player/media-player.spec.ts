@@ -71,6 +71,28 @@ describe('MediaPlayer', () => {
     expect(playerService.seek).toHaveBeenCalledWith(125);
   });
 
+  it('requests fullscreen on the player stage', async () => {
+    const stage = fixture.debugElement.query(By.css('.media-stage')).nativeElement as HTMLElement;
+    const requestFullscreen = vi.fn(async () => undefined);
+    Object.defineProperty(stage, 'requestFullscreen', { configurable: true, value: requestFullscreen });
+
+    await component.toggleFullscreen();
+
+    expect(requestFullscreen).toHaveBeenCalledOnce();
+  });
+
+  it('falls back to the mobile video fullscreen API', async () => {
+    const stage = fixture.debugElement.query(By.css('.media-stage')).nativeElement as HTMLElement;
+    const video = fixture.debugElement.query(By.css('video')).nativeElement as HTMLVideoElement;
+    const enterFullscreen = vi.fn();
+    Object.defineProperty(stage, 'requestFullscreen', { configurable: true, value: undefined });
+    Object.defineProperty(video, 'webkitEnterFullscreen', { configurable: true, value: enterFullscreen });
+
+    await component.toggleFullscreen();
+
+    expect(enterFullscreen).toHaveBeenCalledOnce();
+  });
+
   it('loads and controls YouTube through the same media element', async () => {
     store.selectSource('youtube');
     store.setSource({ type: 'youtube', videoId: 'dQw4w9WgXcQ', url: 'https://youtu.be/dQw4w9WgXcQ' });

@@ -1,6 +1,6 @@
 <section class="volume-control" aria-label="Controle de volume">
   <button type="button" [attr.aria-label]="muted() ? 'Ativar som' : 'Silenciar'" (click)="toggleMute()"><span aria-hidden="true">{{ muted() || volume() === 0 ? '🔇' : '🔊' }}</span></button>
   <label for="volume">Volume</label>
-  <input id="volume" type="range" min="0" max="100" step="1" [value]="volume() * 100" (input)="updateVolume($event)" />
-  <output>{{ muted() ? 0 : volume() * 100 | number: '1.0-0' }}%</output>
+  <input id="volume" type="range" min="0" max="100" step="1" [value]="displayedVolume() * 100" (input)="updateVolume($event)" />
+  <output>{{ muted() ? 0 : displayedVolume() * 100 | number: '1.0-0' }}%</output>
 </section>

@@ -18,9 +18,24 @@ describe('VolumeControl', () => {
     slider.value = '35';
     slider.dispatchEvent(new Event('input'));
     fixture.nativeElement.querySelector('button').click();
+    fixture.detectChanges();
 
     expect(volumes).toEqual([0.35]);
     expect(muted).toEqual([true]);
-    expect(fixture.nativeElement.textContent).toContain('80%');
+    expect(fixture.nativeElement.textContent).toContain('35%');
+  });
+
+  it('updates the displayed percentage immediately while dragging the slider', () => {
+    const fixture = TestBed.createComponent(VolumeControl);
+    fixture.componentRef.setInput('volume', 0.8);
+    fixture.componentRef.setInput('muted', false);
+    fixture.detectChanges();
+
+    const slider = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    slider.value = '35';
+    slider.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('output').textContent).toContain('35%');
   });
 });

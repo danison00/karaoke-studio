@@ -42,7 +42,7 @@ O FFmpeg nunca recebe a URL assinada do YouTube. O `YoutubeRelayRegistry` entreg
 
 O proxy não grava o vídeo e não expõe `upstreamUri` no JSON. O cliente HTTP não segue redirects cegamente: cada destino precisa ser HTTPS, host permitido (`googlevideo.com`/YouTube), porta padrão e resolver somente para endereços públicos. O header `Range` é validado e encaminhado quando possível.
 
-O JavaTube está fixado no build imutável `master-f249f5fd61-1` via JitPack. O resolver usa o cliente `WEB` com PoToken habilitado (`Youtube(url, "WEB", true, false)`), em vez do cliente padrão `VISION_OS`, para atender ao fluxo atual do YouTube. O `nodejs_wrapper` baixa e mantém o runtime Node necessário para gerar o token em `user.home/.nodejswrapper`; a imagem Docker executa com um usuário cujo diretório home é gravável. A seam e os casos de seleção ficam documentados em [javatube-poc.md](superpowers/notes/javatube-poc.md). A aplicação não contorna autenticação, DRM, restrição de idade, vídeos privados ou bloqueios impostos pelo YouTube.
+O JavaTube está fixado no build imutável `master-f249f5fd61-1` via JitPack. O resolver usa o cliente `WEB` pelo construtor documentado `Youtube(url, "WEB")`, em vez do cliente padrão `VISION_OS`, para gerar o PoToken automaticamente via BotGuard/Node.js sem solicitar entrada interativa. A imagem Docker executa com um usuário cujo diretório home é gravável para o `nodejs_wrapper`. A seam e os casos de seleção ficam documentados em [javatube-poc.md](superpowers/notes/javatube-poc.md). A aplicação não contorna autenticação, DRM, restrição de idade, vídeos privados ou bloqueios impostos pelo YouTube.
 
 ## Limitações reais
 

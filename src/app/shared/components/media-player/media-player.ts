@@ -9,6 +9,21 @@ import {
 import { KaraokeStore } from '../../../core/services/karaoke-store.service';
 import { MediaPlayerService } from '../../../core/services/media-player.service';
 
+type FullscreenDocument = Document & {
+  webkitFullscreenElement?: Element | null;
+  webkitExitFullscreen?: () => Promise<void> | void;
+};
+
+type FullscreenStage = HTMLElement & {
+  webkitRequestFullscreen?: () => Promise<void> | void;
+};
+
+type FullscreenVideo = HTMLVideoElement & {
+  webkitDisplayingFullscreen?: boolean;
+  webkitEnterFullscreen?: () => void;
+  webkitExitFullscreen?: () => void;
+};
+
 @Component({
   selector: 'app-media-player',
   templateUrl: './media-player.html',
@@ -55,12 +70,35 @@ export class MediaPlayer {
   }
 
   async toggleFullscreen(): Promise<void> {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
+    const fullscreenDocument = document as FullscreenDocument;
+    const video = this.media().nativeElement as FullscreenVideo;
+    if (document.fullscreenElement || fullscreenDocument.webkitFullscreenElement) {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
+      } else if (fullscreenDocument.webkitExitFullscreen) {
+        await fullscreenDocument.webkitExitFullscreen();
+      }
       return;
     }
-    if (this.stage().nativeElement.requestFullscreen) {
-      await this.stage().nativeElement.requestFullscreen();
+
+    if (video.webkitDisplayingFullscreen && video.webkitExitFullscreen) {
+      video.webkitExitFullscreen();
+      return;
+    }
+
+    const stage = this.stage().nativeElement as FullscreenStage;
+    for (const request of [stage.requestFullscreen, stage.webkitRequestFullscreen]) {
+      if (!request) continue;
+      try {
+        await request.call(stage);
+        return;
+      } catch {
+        // iOS browsers can expose requestFullscreen but reject it for a div.
+      }
+    }
+
+    if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
     }
   }
 

@@ -13,8 +13,6 @@ import com.github.felipeucelli.javatube.Youtube;
 public class JavaTubeResolver {
 
     private static final String JAVA_TUBE_CLIENT = "WEB";
-    private static final boolean JAVA_TUBE_USE_PO_TOKEN = true;
-    private static final boolean JAVA_TUBE_ALLOW_CACHE = false;
 
     private final ClientFactory clientFactory;
     private final AdaptiveStreamSelector adaptiveSelector;
@@ -70,7 +68,10 @@ public class JavaTubeResolver {
     }
 
     static Youtube createYoutube(String url) throws Exception {
-        return new Youtube(url, JAVA_TUBE_CLIENT, JAVA_TUBE_USE_PO_TOKEN, JAVA_TUBE_ALLOW_CACHE);
+        // The two-argument constructor keeps PoToken generation automatic through BotGuard.
+        // Passing usePoToken=true activates JavaTube's interactive stdin prompt, which cannot
+        // work in a hosted service such as Render.
+        return new Youtube(url, JAVA_TUBE_CLIENT);
     }
 
     private ResolvedYoutubeMedia map(

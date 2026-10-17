@@ -16,11 +16,11 @@ class JavaTubeResolverPocTest {
     private static final URI VIDEO_URL = URI.create("https://www.youtube.com/watch?v=abcdefghijk");
 
     @Test
-    void createsYoutubeWithWebClientAndPoTokenEnabled() throws Exception {
+    void createsYoutubeWithWebClientAndAutomaticPoTokenGeneration() throws Exception {
         var youtube = JavaTubeResolver.createYoutube(VIDEO_URL.toString());
 
         assertThat(fieldValue(youtube, "client")).isEqualTo("WEB");
-        assertThat(fieldValue(youtube, "usePoToken")).isEqualTo(true);
+        assertThat(fieldValue(youtube, "usePoToken")).isEqualTo(false);
     }
 
     @Test
